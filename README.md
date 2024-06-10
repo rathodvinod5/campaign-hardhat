@@ -1,10 +1,16 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Getting Started (Front-end)
 
 First, run the development server:
 
 ```bash
+npm install
+#or
+yarn
+
+# and
+
 npm run dev
 # or
 yarn dev
@@ -37,7 +43,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 
 <!-- HARHAT -->
-# Sample Hardhat Project
+# Sample Hardhat Project (Back-end)
 
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
 
