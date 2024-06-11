@@ -3,18 +3,21 @@
 import { useEffect, useState } from "react";
 import { getContract } from "../../lib/ether";
 import contractABI from "../../artifacts/contracts/Campaign.sol/CampaignFactory.json";
+import ethers from "ethers";
 
-const contractAddress = "0xe59Eb7aF49398a163be913133f7358312314D2c1";
+
+const contractAddress = "0x22E72149Cb1562921C3C77510505D8547B926Ca8";
 
 const ContractInteraction = () => {
   const [account, setAccount] = useState(null);
   const [data, setData] = useState(null);
 
   useEffect(() => {
+    console.log('Is ethe present: ', typeof window.ethereum, typeof window.ethereum !== 'undefined', window.ethereum)
     const loadProvider = async () => {
-      if (window.ethereum) {
+      if (typeof window.ethereum !== 'undefined' && window.ethereum) {
         try {
-            console.log('in useEffect')
+          console.log('in useEffect')
           const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
           setAccount(accounts[0]);
           console.log('accounts: ', accounts[0]);
@@ -28,14 +31,19 @@ const ContractInteraction = () => {
   }, []);
 
   const fetchData = async () => {
-    try {
+    if(typeof window.ethereum !== 'undefined' && window.ethereum) {
+      try {
         console.log('in fetchdata')
-      const contract = getContract(contractAddress, contractABI.abi);
-      const data = await contract.requests();
+      // const contract = getContract(contractAddress, contractABI.abi);
+      // const data = await contract.requests();
+
+      const provider = new ethers.providers.JsonRpcProvider(window.ethereum);
+      const data = new ethers.Contract(contractAddress, contractABI.abi, provider.getSigner());
       console.log('data: ', data);
     //   setData(data);
     } catch (error) {
       console.error("Error fetching data from contract", error);
+    }
     }
   };
 
