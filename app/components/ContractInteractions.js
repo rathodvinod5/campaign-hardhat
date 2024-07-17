@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";
 import { getContract } from "../../lib/ether";
 import contractABI from "../../artifacts/contracts/Campaign.sol/CampaignFactory.json";
-import ethers from "ethers";
+// import ethers from "ethers";
+import { ethers, JsonRpcProvider } from "ethers";
+
 
 
 const contractAddress = "0x22E72149Cb1562921C3C77510505D8547B926Ca8";
@@ -31,20 +33,39 @@ const ContractInteraction = () => {
   }, []);
 
   const fetchData = async () => {
+    console.log('in fetchData')
     if(typeof window.ethereum !== 'undefined' && window.ethereum) {
       try {
-        console.log('in fetchdata')
-      // const contract = getContract(contractAddress, contractABI.abi);
-      // const data = await contract.requests();
+        console.log('in try')
+        // const contract = getContract(contractAddress, contractABI.abi);
+        // const data = await contract.requests();
 
-      const provider = new ethers.providers.JsonRpcProvider(window.ethereum);
-      const data = new ethers.Contract(contractAddress, contractABI.abi, provider.getSigner());
-      console.log('data: ', data);
-    //   setData(data);
-    } catch (error) {
-      console.error("Error fetching data from contract", error);
+        const provider = new ethers.providers.JsonRpcProvider(process.env.SEPOLIA_URL);
+        // const provider = new ethers.providers.web3Provider(process.env.SEPOLIA_URL);
+        const data = new ethers.Contract(contractAddress, contractABI.abi, provider.getSigner());
+        console.log('data: ', data);
+      //   setData(data);
+      } catch (error) {
+        console.error("Error fetching data from contract", error);
+      }
     }
-    }
+
+    // try {
+    //   const {ethereum} = window;
+
+    //   if (ethereum) {
+    //     const provider = new ethers.providers.Web3Provider(ethereum, "any");
+    //     const signer = provider.getSigner();
+    //     const data = new ethers.Contract(
+    //       contractAddress,
+    //       contractABI.abi,
+    //       signer
+    //     );
+    //     console.log('data: ', data);
+    //   }
+    // } catch (error) {
+    //   console.log('error in connecting: ', error);
+    // }
   };
 
   const sendData = async () => {
