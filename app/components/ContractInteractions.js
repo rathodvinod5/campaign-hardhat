@@ -2,7 +2,8 @@
 // components/ContractInteraction.js
 import { useEffect, useState } from "react";
 import { getContract } from "../../lib/ether";
-import contractABI from "../../artifacts/contracts/Campaign.sol/CampaignFactory.json";
+import campaignFactoryABI from "../../artifacts/contracts/Campaign.sol/CampaignFactory.json";
+import campaignABI from '../../artifacts/contracts/Campaign.sol/Campaign.json';
 // import ethers from "ethers";
 import { ethers, JsonRpcProvider } from "ethers";
 
@@ -37,12 +38,12 @@ const ContractInteraction = () => {
     if(typeof window.ethereum !== 'undefined' && window.ethereum) {
       try {
         console.log('in try')
-        // const contract = getContract(contractAddress, contractABI.abi);
+        // const contract = getContract(contractAddress, campaignFactoryABI.abi);
         // const data = await contract.requests();
 
         const provider = new ethers.providers.JsonRpcProvider(process.env.SEPOLIA_URL);
         // const provider = new ethers.providers.web3Provider(process.env.SEPOLIA_URL);
-        const data = new ethers.Contract(contractAddress, contractABI.abi, provider.getSigner());
+        const data = new ethers.Contract(contractAddress, campaignFactoryABI.abi, provider.getSigner());
         console.log('data: ', data);
       //   setData(data);
       } catch (error) {
@@ -58,7 +59,7 @@ const ContractInteraction = () => {
     //     const signer = provider.getSigner();
     //     const data = new ethers.Contract(
     //       contractAddress,
-    //       contractABI.abi,
+    //       campaignFactoryABI.abi,
     //       signer
     //     );
     //     console.log('data: ', data);
@@ -70,7 +71,7 @@ const ContractInteraction = () => {
 
   const sendData = async () => {
     try {
-      const contract = getContract(contractAddress, contractABI.abi);
+      const contract = getContract(contractAddress, campaignFactoryABI.abi);
       const tx = await contract.someWriteFunction("someValue", {
         from: account,
       });

@@ -1,7 +1,8 @@
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Card } from "semantic-ui-react";
 
-export const RenderList = ({ factoryContract }) => {
+export const RenderCampaignList = ({ factoryContract }) => {
     const [campaigns, setCampaigns] = useState([]);
 
     useEffect(() => {
@@ -27,8 +28,8 @@ export const RenderList = ({ factoryContract }) => {
         return {
           header: address,
           description: (
-            <Link route={`/campaigns/${address}`}>
-              <a>View Campaign</a>
+            <Link href={`/campaign/${address}`}>
+              <p className="text-sky-500">View Campaign</p>
             </Link>
           ),
           fluid: true
@@ -38,4 +39,4 @@ export const RenderList = ({ factoryContract }) => {
     return <Card.Group items={items} />;
   }
 
-  export default RenderList;
+  export default RenderCampaignList;

@@ -2,7 +2,7 @@
 "use client"
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import contractABI from "../../artifacts/contracts/Campaign.sol/CampaignFactory.json";
+import campaignFactoryABI from "../../artifacts/contracts/Campaign.sol/CampaignFactory.json";
 import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
 
 const contractAddress = "0x22E72149Cb1562921C3C77510505D8547B926Ca8";
@@ -45,8 +45,8 @@ const FactoryContextProvider = ({ children }) => {
         const signer = provider.getSigner();
 
         // get contract details
-        const data = new ethers.Contract(contractAddress, contractABI.abi, signer);
-        console.log('contract data: ', data)
+        const data = new ethers.Contract(contractAddress, campaignFactoryABI.abi, signer);
+        console.log('contract data: ')
 
         setProvider(provider);
         setSigner(signer);
