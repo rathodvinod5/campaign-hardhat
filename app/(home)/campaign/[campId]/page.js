@@ -6,7 +6,6 @@ import { Grid, Button, Loader, Header } from 'semantic-ui-react';
 import { RenderCardsServerComp } from './RenderCards';
 import { useFacoryContext } from '@/app/context/factoryContext';
 import { ethers } from 'ethers';
-
 import campaignABI from '../../../../artifacts/contracts/Campaign.sol/Campaign.json';
 import ContributeForm from './ContributeForm';
 

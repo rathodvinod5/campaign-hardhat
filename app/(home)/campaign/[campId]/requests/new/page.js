@@ -21,6 +21,7 @@ const NewRequest = () => {
     const { campId } = param;
 
     const onSubmit = async (event) => {
+        console.log('onSubmit')
         event.preventDefault();
         setLoading(true);
         setErrorMessage('');
@@ -28,15 +29,15 @@ const NewRequest = () => {
         try {
             const campaign = new ethers.Contract(campId, campaignABI.abi, signer);
             try {
-                // await campaign.createRequest(description, ethers.utils.parseEther(parseInt(value)), recipient);
-                router.replace(`/campaign/${campId}`, { scroll: true });
+                await campaign.createRequest(description, ethers.utils.parseEther(value), recipient);
+                router.replace(`/campaign/${campId}/requests`, { scroll: true });
             } catch(err) {
                 console.log('inner catch: ', err);
                 throw err;
             }
         } catch(error) {
             console.log('error in connectin campaign: ', error)
-            setErrorMessage(error.message)
+            setErrorMessage(error.message.includes('user rejected') ? 'User Rejected transaction':  error.message);
         }
         setLoading(false);
     }
